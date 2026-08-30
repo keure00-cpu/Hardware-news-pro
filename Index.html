@@ -4,18 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#070b14">
-
 <title>Hardware News Pro</title>
 
 <style>
 :root{
   --bg:#070b14;
   --card:#101a2b;
+  --card2:#09111e;
   --blue:#00b7ff;
   --blue2:#63d5ff;
   --text:#f4f8ff;
   --muted:#93a4ba;
   --border:rgba(255,255,255,.09);
+  --success:#29df86;
+  --danger:#ff6473;
   --radius:20px;
 }
 
@@ -29,16 +31,25 @@ body{
     var(--bg);
   color:var(--text);
 }
+
+body.modal-open{overflow:hidden}
+
 a{text-decoration:none;color:inherit}
-button{font:inherit;cursor:pointer;border:0}
-.container{width:min(1150px,92%);margin:auto}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+
+.container{
+  width:min(1150px,92%);
+  margin:auto;
+}
 
 /* HEADER */
+
 header{
   position:sticky;
   top:0;
   z-index:100;
-  background:rgba(7,11,20,.9);
+  background:rgba(7,11,20,.92);
   backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
 }
@@ -54,6 +65,7 @@ nav{
 .logo{
   font-size:20px;
   font-weight:900;
+  letter-spacing:-.5px;
 }
 
 .logo span{color:var(--blue)}
@@ -72,10 +84,30 @@ nav{
 
 .header-actions{
   display:flex;
+  align-items:center;
   gap:9px;
 }
 
+.user-area{
+  display:none;
+  align-items:center;
+  gap:10px;
+}
+
+.user-area.active{display:flex}
+
+.user-name{
+  color:var(--blue2);
+  font-size:13px;
+  font-weight:bold;
+  max-width:120px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
 /* BUTTONS */
+
 .btn{
   display:inline-flex;
   align-items:center;
@@ -100,7 +132,14 @@ nav{
   border:1px solid var(--border);
 }
 
+.btn-danger{
+  background:#2a151b;
+  color:#ff9ba4;
+  border:1px solid rgba(255,100,115,.2);
+}
+
 /* HERO */
+
 .hero{padding:85px 0 65px}
 
 .hero-grid{
@@ -172,6 +211,7 @@ nav{
 }
 
 /* SECTIONS */
+
 .section{padding:60px 0}
 
 .section-title{
@@ -190,6 +230,7 @@ nav{
 }
 
 /* CATEGORIES */
+
 .categories{
   display:flex;
   gap:10px;
@@ -212,6 +253,7 @@ nav{
 }
 
 /* NEWS */
+
 .featured{
   display:grid;
   grid-template-columns:1.35fr .65fr;
@@ -247,7 +289,6 @@ nav{
 
 .featured-main p{
   color:#c1ccda;
-  max-width:700px;
   line-height:1.65;
   margin-bottom:20px;
 }
@@ -347,6 +388,7 @@ nav{
 }
 
 /* PREMIUM */
+
 .premium-box{
   padding:35px;
   border-radius:28px;
@@ -395,6 +437,12 @@ nav{
 .premium-content{
   opacity:.45;
   filter:blur(2px);
+  transition:.3s;
+}
+
+.premium-card.unlocked .premium-content{
+  opacity:1;
+  filter:none;
 }
 
 .premium-content h3{
@@ -419,15 +467,55 @@ nav{
   background:linear-gradient(transparent,rgba(5,9,18,.92));
 }
 
-.lock-overlay h3{margin:8px}
+.premium-card.unlocked .lock-overlay{
+  display:none;
+}
 
-.lock-overlay p{
-  font-size:13px;
-  color:#c3d0df;
-  margin-bottom:16px;
+/* MEMBER AREA */
+
+.member-panel{
+  display:none;
+  padding:30px;
+  border-radius:25px;
+  border:1px solid rgba(0,183,255,.2);
+  background:
+    radial-gradient(circle at 100% 0%,rgba(0,183,255,.12),transparent 40%),
+    var(--card);
+}
+
+.member-panel.active{display:block}
+
+.member-panel h2{font-size:32px}
+
+.member-panel p{
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.member-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:25px;
+}
+
+.member-stat{
+  padding:20px;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+
+.member-stat small{color:var(--muted)}
+
+.member-stat strong{
+  display:block;
+  font-size:23px;
+  margin-top:8px;
 }
 
 /* PLANS */
+
 .plans{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -492,6 +580,7 @@ nav{
 }
 
 /* CTA */
+
 .cta{
   text-align:center;
   padding:70px 25px;
@@ -511,7 +600,116 @@ nav{
   line-height:1.7;
 }
 
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  padding:20px;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.active{display:flex}
+
+.modal-box{
+  width:min(430px,100%);
+  background:#0c1422;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:28px;
+  position:relative;
+}
+
+.modal-close{
+  position:absolute;
+  top:13px;
+  right:15px;
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:#172133;
+  color:white;
+  font-size:22px;
+}
+
+.modal-box h2{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.modal-box > p{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:22px;
+}
+
+.form-group{margin-bottom:15px}
+
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  color:#c5d0de;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px;
+  border-radius:11px;
+  border:1px solid var(--border);
+  background:#070d18;
+  color:white;
+  outline:none;
+}
+
+.form-group input:focus{
+  border-color:var(--blue);
+}
+
+.form-btn{
+  width:100%;
+  margin-top:5px;
+}
+
+.form-switch{
+  text-align:center;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.form-switch button{
+  color:var(--blue);
+  background:transparent;
+}
+
+.message{
+  display:none;
+  margin-bottom:14px;
+  padding:12px;
+  border-radius:10px;
+  font-size:13px;
+}
+
+.message.error{
+  display:block;
+  color:#ff9ba4;
+  background:#2a151b;
+}
+
+.message.success{
+  display:block;
+  color:#83f0b9;
+  background:#102a20;
+}
+
 /* FOOTER */
+
 footer{
   text-align:center;
   color:var(--muted);
@@ -526,27 +724,14 @@ footer strong{
 }
 
 /* RESPONSIVE */
+
 @media(max-width:900px){
-  .hero-grid,.featured{
-    grid-template-columns:1fr;
-  }
-
-  .side-news{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-  }
-
-  .news-grid,.premium-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .plans{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .plan.popular{
-    transform:none;
-  }
+  .hero-grid,.featured{grid-template-columns:1fr}
+  .side-news{display:grid;grid-template-columns:1fr 1fr}
+  .news-grid,.premium-grid{grid-template-columns:1fr 1fr}
+  .plans{grid-template-columns:1fr 1fr}
+  .member-grid{grid-template-columns:1fr 1fr}
+  .plan.popular{transform:none}
 }
 
 @media(max-width:650px){
@@ -554,30 +739,16 @@ footer strong{
   .links{display:none}
   .header-actions .btn-outline{display:none}
   .logo{font-size:16px}
+  .user-name{display:none}
 
-  .hero{
-    padding:50px 0 40px;
-  }
+  .hero{padding:50px 0 40px}
+  .hero h1{font-size:52px}
+  .hero p{font-size:16px}
 
-  .hero h1{
-    font-size:52px;
-  }
+  .hero-actions{flex-direction:column}
+  .hero-actions .btn{width:100%}
 
-  .hero p{
-    font-size:16px;
-  }
-
-  .hero-actions{
-    flex-direction:column;
-  }
-
-  .hero-actions .btn{
-    width:100%;
-  }
-
-  .section{
-    padding:40px 0;
-  }
+  .section{padding:40px 0}
 
   .section-title{
     flex-direction:column;
@@ -590,45 +761,27 @@ footer strong{
     padding:25px;
   }
 
-  .featured-main h3{
-    font-size:30px;
-  }
+  .featured-main h3{font-size:30px}
+  .featured-main .btn{width:100%}
 
-  .featured-main .btn{
-    width:100%;
-  }
+  .side-news{display:flex}
 
-  .side-news{
-    display:flex;
-  }
-
-  .news-grid,.premium-grid,.plans{
+  .news-grid,
+  .premium-grid,
+  .plans,
+  .member-grid{
     grid-template-columns:1fr;
   }
 
-  .premium-box{
-    padding:22px;
-  }
+  .premium-box{padding:22px}
 
-  .premium-header{
-    flex-direction:column;
-  }
+  .premium-header{flex-direction:column}
+  .premium-icon{display:none}
 
-  .premium-icon{
-    display:none;
-  }
+  .plan.popular{transform:none}
 
-  .plan.popular{
-    transform:none;
-  }
-
-  .cta{
-    padding:50px 20px;
-  }
-
-  .cta h2{
-    font-size:34px;
-  }
+  .cta{padding:50px 20px}
+  .cta h2{font-size:34px}
 }
 </style>
 </head>
@@ -639,7 +792,7 @@ footer strong{
 <div class="container">
 <nav>
 
-<a class="logo" href="#">
+<a href="#" class="logo">
 HARDWARE <span>NEWS PRO</span>
 </a>
 
@@ -647,11 +800,18 @@ HARDWARE <span>NEWS PRO</span>
 <a href="#noticias">Notícias</a>
 <a href="#premium">Premium</a>
 <a href="#planos">Planos</a>
+<a href="#area-membro">Minha Área</a>
 </div>
 
-<div class="header-actions">
-<a href="#premium" class="btn btn-outline">Entrar</a>
-<a href="#planos" class="btn">Assinar</a>
+<div class="header-actions" id="guestActions">
+<button class="btn btn-outline" onclick="openModal('login')">Entrar</button>
+<button class="btn" onclick="openModal('register')">Criar conta</button>
+</div>
+
+<div class="user-area" id="userArea">
+<span class="user-name" id="userName">Usuário</span>
+<button class="btn btn-outline" onclick="showMemberArea()">Minha Área</button>
+<button class="btn btn-danger" onclick="logout()">Sair</button>
 </div>
 
 </nav>
@@ -665,7 +825,6 @@ HARDWARE <span>NEWS PRO</span>
 <div class="hero-grid">
 
 <div>
-
 <div class="kicker">⚡ NOTÍCIAS • HARDWARE • TECNOLOGIA</div>
 
 <h1>
@@ -683,24 +842,21 @@ processadores, computadores e inteligência artificial.
 <a href="#noticias" class="btn">📰 Ver notícias</a>
 <a href="#premium" class="btn btn-outline">🔒 Conteúdo Premium</a>
 </div>
-
 </div>
 
 <div class="hero-card">
-
 <div class="icon">🔒</div>
 
 <h2>Conteúdo Premium</h2>
 
 <p>
 Tenha acesso a análises exclusivas, benchmarks completos,
-comparativos avançados e conteúdo especial.
+comparativos avançados e conteúdos especiais.
 </p>
 
 <a href="#planos" class="btn">
 Desbloquear Premium
 </a>
-
 </div>
 
 </div>
@@ -712,17 +868,16 @@ Desbloquear Premium
 
 <div class="section-title">
 <h2>Categorias</h2>
-<p>Escolha o assunto que deseja acompanhar</p>
+<p>Escolha o assunto</p>
 </div>
 
 <div class="categories">
 <button>🎮 GPUs</button>
 <button>⚙️ Processadores</button>
 <button>🖥️ PC Gamer</button>
-<button>🤖 IA</button>
+<button>🤖 Inteligência Artificial</button>
 <button>💾 SSD</button>
 <button>📱 Smartphones</button>
-<button>🔥 Tecnologia</button>
 </div>
 
 </div>
@@ -739,18 +894,20 @@ Desbloquear Premium
 <div class="featured">
 
 <div class="featured-main">
-
 <div class="tag">DESTAQUE</div>
 
-<h3>O futuro das placas de vídeo está cada vez mais ligado à inteligência artificial</h3>
+<h3>
+O futuro das placas de vídeo está cada vez mais ligado à inteligência artificial
+</h3>
 
 <p>
-As GPUs modernas estão evoluindo rapidamente e novas tecnologias
-estão mudando jogos, criação de conteúdo e aplicações profissionais.
+As GPUs modernas estão evoluindo rapidamente e novas tecnologias estão
+mudando jogos, criação de conteúdo e aplicações profissionais.
 </p>
 
-<a href="#noticias" class="btn">Ler matéria</a>
-
+<button class="btn" onclick="showNews('O futuro das placas de vídeo')">
+Ler matéria
+</button>
 </div>
 
 <div class="side-news">
@@ -779,7 +936,7 @@ estão mudando jogos, criação de conteúdo e aplicações profissionais.
 <h3>Como funciona uma GPU moderna?</h3>
 <p>Conheça os principais componentes e tecnologias utilizadas nas GPUs atuais.</p>
 <div class="news-meta"><span>Hardware News</span><span>5 min</span></div>
-<button class="read-btn">Ler notícia</button>
+<button class="read-btn" onclick="showNews('Como funciona uma GPU moderna?')">Ler notícia</button>
 </div>
 </div>
 
@@ -790,7 +947,7 @@ estão mudando jogos, criação de conteúdo e aplicações profissionais.
 <h3>Núcleos e threads: entenda a diferença</h3>
 <p>Aprenda os conceitos fundamentais dos processadores modernos.</p>
 <div class="news-meta"><span>Hardware News</span><span>4 min</span></div>
-<button class="read-btn">Ler notícia</button>
+<button class="read-btn" onclick="showNews('Núcleos e threads')">Ler notícia</button>
 </div>
 </div>
 
@@ -801,7 +958,7 @@ estão mudando jogos, criação de conteúdo e aplicações profissionais.
 <h3>Por que a IA precisa de tanto hardware?</h3>
 <p>GPUs e aceleradores especializados estão transformando os datacenters.</p>
 <div class="news-meta"><span>Hardware News</span><span>6 min</span></div>
-<button class="read-btn">Ler notícia</button>
+<button class="read-btn" onclick="showNews('Por que a IA precisa de tanto hardware?')">Ler notícia</button>
 </div>
 </div>
 
@@ -822,8 +979,8 @@ estão mudando jogos, criação de conteúdo e aplicações profissionais.
 <h2>Conteúdo para quem quer ir além.</h2>
 
 <p>
-Benchmarks, comparativos e análises aprofundadas
-para quem realmente acompanha o mundo do hardware.
+Benchmarks, comparativos e análises aprofundadas para quem
+realmente acompanha o mundo do hardware.
 </p>
 
 </div>
@@ -839,6 +996,7 @@ para quem realmente acompanha o mundo do hardware.
 <h3>Qual GPU entrega mais desempenho?</h3>
 <p>Comparativo completo com desempenho, temperatura e consumo.</p>
 </div>
+
 <div class="lock-overlay">
 <h3>🔒 Conteúdo Premium</h3>
 <p>Assine para desbloquear.</p>
@@ -852,9 +1010,10 @@ para quem realmente acompanha o mundo do hardware.
 <h3>Guia completo para montar um PC</h3>
 <p>Escolha todas as peças corretamente e evite incompatibilidades.</p>
 </div>
+
 <div class="lock-overlay">
 <h3>🔒 Conteúdo Premium</h3>
-<p>Conteúdo exclusivo para assinantes.</p>
+<p>Conteúdo exclusivo.</p>
 <a href="#planos" class="btn">Assinar</a>
 </div>
 </div>
@@ -865,15 +1024,53 @@ para quem realmente acompanha o mundo do hardware.
 <h3>Os melhores processadores</h3>
 <p>Comparação completa para jogos, trabalho e inteligência artificial.</p>
 </div>
+
 <div class="lock-overlay">
 <h3>🔒 Conteúdo Premium</h3>
-<p>Disponível apenas para membros.</p>
+<p>Disponível para membros.</p>
 <a href="#planos" class="btn">Virar membro</a>
 </div>
 </div>
 
 </div>
 </div>
+</div>
+</section>
+
+<section class="section" id="area-membro">
+<div class="container">
+
+<div class="member-panel" id="memberPanel">
+
+<div class="kicker">👤 ÁREA DO ASSINANTE</div>
+
+<h2>Olá, <span id="memberName">Usuário</span>!</h2>
+
+<p>
+Bem-vindo à sua área do Hardware News Pro.
+</p>
+
+<div class="member-grid">
+
+<div class="member-stat">
+<small>Status</small>
+<strong id="statusText">Gratuito</strong>
+</div>
+
+<div class="member-stat">
+<small>Conteúdos Premium</small>
+<strong id="contentStatus">🔒 Bloqueado</strong>
+</div>
+
+<div class="member-stat">
+<small>Conta</small>
+<strong>Ativa</strong>
+</div>
+
+</div>
+
+</div>
+
 </div>
 </section>
 
@@ -887,7 +1084,6 @@ para quem realmente acompanha o mundo do hardware.
 
 <div class="plans">
 
-<!-- PLANO 1 -->
 <div class="plan">
 
 <h3>Mensal</h3>
@@ -904,13 +1100,13 @@ R$ 9,90 <span>/mês</span>
 
 <a class="btn"
 href="https://mpago.la/1afeBKt"
-target="_blank">
+target="_blank"
+rel="noopener">
 Começar agora
 </a>
 
 </div>
 
-<!-- PLANO 2 -->
 <div class="plan popular">
 
 <div class="plan-badge">MAIS POPULAR</div>
@@ -930,13 +1126,13 @@ R$ 19,90 <span>/mês</span>
 
 <a class="btn"
 href="https://mpago.la/2BEZAWZ"
-target="_blank">
+target="_blank"
+rel="noopener">
 Assinar Premium
 </a>
 
 </div>
 
-<!-- PLANO 3 -->
 <div class="plan">
 
 <h3>Anual</h3>
@@ -953,7 +1149,8 @@ R$ 149,90 <span>/ano</span>
 
 <a class="btn"
 href="https://mpago.la/114ah8K"
-target="_blank">
+target="_blank"
+rel="noopener">
 Assinar anual
 </a>
 
@@ -1001,11 +1198,354 @@ O mundo do hardware. Sem enrolação.
 </div>
 </footer>
 
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+
+<div class="modal-box">
+
+<button class="modal-close" onclick="closeModals()">×</button>
+
+<h2>Entrar</h2>
+
+<p>Acesse sua conta Hardware News Pro.</p>
+
+<div class="message" id="loginMessage"></div>
+
+<form onsubmit="login(event)">
+
+<div class="form-group">
+<label>E-mail</label>
+<input type="email" id="loginEmail" required>
+</div>
+
+<div class="form-group">
+<label>Senha</label>
+<input type="password" id="loginPassword" required>
+</div>
+
+<button class="btn form-btn" type="submit">
+Entrar na conta
+</button>
+
+</form>
+
+<div class="form-switch">
+Ainda não possui uma conta?
+<button onclick="switchModal('register')">Criar conta</button>
+</div>
+
+</div>
+</div>
+
+<!-- REGISTER MODAL -->
+
+<div class="modal" id="registerModal">
+
+<div class="modal-box">
+
+<button class="modal-close" onclick="closeModals()">×</button>
+
+<h2>Criar conta</h2>
+
+<p>Cadastre-se gratuitamente.</p>
+
+<div class="message" id="registerMessage"></div>
+
+<form onsubmit="register(event)">
+
+<div class="form-group">
+<label>Seu nome</label>
+<input type="text" id="registerName" required>
+</div>
+
+<div class="form-group">
+<label>E-mail</label>
+<input type="email" id="registerEmail" required>
+</div>
+
+<div class="form-group">
+<label>Senha</label>
+<input type="password" id="registerPassword" minlength="4" required>
+</div>
+
+<button class="btn form-btn" type="submit">
+Criar minha conta
+</button>
+
+</form>
+
+<div class="form-switch">
+Já possui uma conta?
+<button onclick="switchModal('login')">Entrar</button>
+</div>
+
+</div>
+</div>
+
 <script>
-document.querySelectorAll(".read-btn").forEach(function(btn){
-    btn.addEventListener("click", function(){
-        alert("A página completa desta notícia será adicionada na próxima versão!");
+const STORAGE_USERS = "hardwareNewsUsers";
+const STORAGE_CURRENT = "hardwareNewsCurrentUser";
+
+function getUsers(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_USERS)) || [];
+  }catch(e){
+    return [];
+  }
+}
+
+function saveUsers(users){
+  localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+}
+
+function getCurrentUser(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_CURRENT));
+  }catch(e){
+    return null;
+  }
+}
+
+function saveCurrentUser(user){
+  localStorage.setItem(STORAGE_CURRENT, JSON.stringify(user));
+}
+
+function openModal(type){
+  closeModals();
+  document.body.classList.add("modal-open");
+
+  if(type === "login"){
+    document.getElementById("loginModal").classList.add("active");
+  }
+
+  if(type === "register"){
+    document.getElementById("registerModal").classList.add("active");
+  }
+}
+
+function closeModals(){
+  document.body.classList.remove("modal-open");
+
+  document.querySelectorAll(".modal").forEach(function(modal){
+    modal.classList.remove("active");
+  });
+}
+
+function switchModal(type){
+  openModal(type);
+}
+
+function showMessage(id,text,type){
+  const el = document.getElementById(id);
+
+  el.className = "message " + type;
+  el.textContent = text;
+
+  setTimeout(function(){
+    el.className = "message";
+    el.textContent = "";
+  },4000);
+}
+
+function register(event){
+  event.preventDefault();
+
+  const name = document.getElementById("registerName").value.trim();
+  const email = document.getElementById("registerEmail").value.trim().toLowerCase();
+  const password = document.getElementById("registerPassword").value;
+
+  let users = getUsers();
+
+  const exists = users.find(function(user){
+    return user.email === email;
+  });
+
+  if(exists){
+    showMessage(
+      "registerMessage",
+      "Este e-mail já possui uma conta.",
+      "error"
+    );
+    return;
+  }
+
+  const user = {
+    id:Date.now(),
+    name:name,
+    email:email,
+    password:password,
+    premium:false
+  };
+
+  users.push(user);
+  saveUsers(users);
+  saveCurrentUser(user);
+
+  updateInterface();
+
+  showMessage(
+    "registerMessage",
+    "Conta criada com sucesso!",
+    "success"
+  );
+
+  setTimeout(function(){
+    closeModals();
+    showMemberArea();
+  },700);
+}
+
+function login(event){
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value;
+
+  const users = getUsers();
+
+  const user = users.find(function(item){
+    return item.email === email && item.password === password;
+  });
+
+  if(!user){
+    showMessage(
+      "loginMessage",
+      "E-mail ou senha incorretos.",
+      "error"
+    );
+    return;
+  }
+
+  saveCurrentUser(user);
+
+  updateInterface();
+
+  showMessage(
+    "loginMessage",
+    "Login realizado com sucesso!",
+    "success"
+  );
+
+  setTimeout(function(){
+    closeModals();
+    showMemberArea();
+  },600);
+}
+
+function logout(){
+  localStorage.removeItem(STORAGE_CURRENT);
+  updateInterface();
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function updateInterface(){
+  const user = getCurrentUser();
+
+  const guestActions = document.getElementById("guestActions");
+  const userArea = document.getElementById("userArea");
+  const memberPanel = document.getElementById("memberPanel");
+
+  if(user){
+
+    guestActions.style.display = "none";
+    userArea.classList.add("active");
+
+    document.getElementById("userName").textContent = user.name;
+    document.getElementById("memberName").textContent = user.name;
+
+    memberPanel.classList.add("active");
+
+    if(user.premium){
+      document.getElementById("statusText").textContent = "⭐ Premium";
+      document.getElementById("contentStatus").textContent = "🔓 Liberado";
+
+      document.querySelectorAll(".premium-card").forEach(function(card){
+        card.classList.add("unlocked");
+      });
+    }else{
+      document.getElementById("statusText").textContent = "Gratuito";
+      document.getElementById("contentStatus").textContent = "🔒 Bloqueado";
+
+      document.querySelectorAll(".premium-card").forEach(function(card){
+        card.classList.remove("unlocked");
+      });
+    }
+
+  }else{
+
+    guestActions.style.display = "flex";
+    userArea.classList.remove("active");
+    memberPanel.classList.remove("active");
+
+    document.querySelectorAll(".premium-card").forEach(function(card){
+      card.classList.remove("unlocked");
     });
+  }
+}
+
+function showMemberArea(){
+  const user = getCurrentUser();
+
+  if(!user){
+    openModal("login");
+    return;
+  }
+
+  document.getElementById("area-membro").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function showNews(title){
+  alert(
+    title +
+    "\n\nNa próxima versão, cada notícia terá uma página completa com o conteúdo da matéria."
+  );
+}
+
+/* FUNÇÃO APENAS PARA TESTE DA V3
+
+   Para testar o desbloqueio Premium sem pagamento,
+   abra o console e execute:
+
+   testPremium();
+
+*/
+
+function testPremium(){
+  const user = getCurrentUser();
+
+  if(!user){
+    alert("Faça login primeiro.");
+    return;
+  }
+
+  user.premium = true;
+
+  const users = getUsers();
+
+  const index = users.findIndex(function(item){
+    return item.id === user.id;
+  });
+
+  if(index !== -1){
+    users[index] = user;
+    saveUsers(users);
+  }
+
+  saveCurrentUser(user);
+
+  updateInterface();
+
+  alert("Modo de teste: Premium liberado!");
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  updateInterface();
 });
 </script>
 
