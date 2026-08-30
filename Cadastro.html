@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Criar Conta | Hardware News Pro</title>
+<title>Cadastro | Hardware News Pro</title>
 
 <style>
-
 :root{
   --bg:#07111f;
   --bg2:#0b1626;
@@ -17,35 +16,37 @@
   --text:#f5f8fc;
   --muted:#a5b3c5;
   --border:#20334c;
+  --green:#25D366;
+  --red:#ff5d6c;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   min-height:100vh;
   font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at top left,rgba(0,183,255,.15),transparent 30%),
-    linear-gradient(145deg,var(--bg),var(--bg2));
   color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(0,183,255,.16),transparent 32%),
+    linear-gradient(145deg,var(--bg),var(--bg2));
+  display:flex;
+  flex-direction:column;
 }
 
 a{
-  text-decoration:none;
   color:inherit;
+  text-decoration:none;
 }
 
 header{
   border-bottom:1px solid var(--border);
-  background:rgba(7,17,31,.95);
+  background:rgba(7,17,31,.92);
 }
 
 nav{
   width:min(1100px,92%);
-  height:70px;
+  min-height:72px;
   margin:auto;
   display:flex;
   align-items:center;
@@ -53,7 +54,7 @@ nav{
 }
 
 .logo{
-  font-size:20px;
+  font-size:21px;
   font-weight:900;
 }
 
@@ -61,71 +62,425 @@ nav{
   color:var(--blue);
 }
 
-.back{
-  padding:10px 16px;
+.btn{
+  border:none;
+  padding:13px 19px;
   border-radius:10px;
-  border:1px solid var(--border);
+  cursor:pointer;
+  font-weight:800;
+  background:linear-gradient(135deg,var(--blue2),var(--blue));
+  color:#03111c;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-outline{
+  background:transparent;
   color:white;
+  border:1px solid var(--border);
 }
 
-.back:hover{
-  border-color:var(--blue);
-}
-
-.main{
-  min-height:calc(100vh - 70px);
+main{
+  flex:1;
   display:flex;
-  align-items:center;
   justify-content:center;
-  padding:40px 15px;
+  align-items:center;
+  padding:50px 20px;
 }
 
 .card{
   width:100%;
   max-width:500px;
   padding:35px;
-  border-radius:24px;
-  background:rgba(16,29,48,.95);
   border:1px solid var(--border);
-  box-shadow:0 20px 70px rgba(0,0,0,.3);
+  border-radius:24px;
+  background:rgba(16,29,48,.97);
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
 }
 
 .icon{
-  width:60px;
-  height:60px;
+  width:65px;
+  height:65px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
+  font-size:30px;
   border-radius:18px;
-  background:rgba(0,183,255,.12);
-  margin-bottom:20px;
-}
-
-.badge{
-  display:inline-block;
-  padding:7px 12px;
-  border-radius:20px;
   background:rgba(0,183,255,.1);
-  border:1px solid rgba(0,183,255,.25);
-  color:var(--blue2);
-  font-size:11px;
-  font-weight:bold;
 }
 
 h1{
-  margin:15px 0 10px;
+  margin:20px 0 10px;
   font-size:32px;
 }
 
 .description{
+  margin-bottom:28px;
   color:var(--muted);
   line-height:1.6;
 }
 
-form{
-  margin-top:25px;
+.group{
+  margin-bottom:17px;
 }
 
-.group{
-  margin-bottom:
+label{
+  display:block;
+  margin-bottom:8px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#091421;
+  color:white;
+  outline:none;
+}
+
+input:focus{
+  border-color:var(--blue);
+}
+
+.message{
+  display:none;
+  margin-bottom:18px;
+  padding:13px;
+  border-radius:10px;
+  font-size:13px;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  color:#ffabb4;
+  background:rgba(255,93,108,.1);
+  border:1px solid rgba(255,93,108,.3);
+}
+
+.message.success{
+  color:#8dffc0;
+  background:rgba(37,211,102,.1);
+  border:1px solid rgba(37,211,102,.3);
+}
+
+.submit{
+  width:100%;
+  margin-top:5px;
+}
+
+.bottom{
+  margin-top:25px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.bottom a{
+  color:var(--blue2);
+  font-weight:bold;
+}
+
+footer{
+  padding:25px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+
+@media(max-width:600px){
+
+  nav{
+    min-height:65px;
+  }
+
+  .card{
+    padding:25px 20px;
+  }
+
+  h1{
+    font-size:28px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">
+      HARDWARE <span>NEWS PRO</span>
+    </a>
+
+    <a href="login.html" class="btn btn-outline">
+      Entrar
+    </a>
+  </nav>
+</header>
+
+<main>
+
+<section class="card">
+
+  <div class="icon">👤</div>
+
+  <h1>Crie sua conta</h1>
+
+  <p class="description">
+    Cadastre-se gratuitamente para acompanhar as notícias do mundo do hardware.
+  </p>
+
+  <div id="message" class="message"></div>
+
+  <form id="cadastroForm">
+
+    <div class="group">
+      <label for="nome">Nome</label>
+
+      <input
+        type="text"
+        id="nome"
+        placeholder="Digite seu nome"
+        required
+        minlength="2"
+      >
+    </div>
+
+    <div class="group">
+      <label for="email">E-mail</label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="seu@email.com"
+        required
+      >
+    </div>
+
+    <div class="group">
+      <label for="senha">Senha</label>
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Mínimo 4 caracteres"
+        required
+        minlength="4"
+      >
+    </div>
+
+    <div class="group">
+      <label for="confirmarSenha">Confirmar senha</label>
+
+      <input
+        type="password"
+        id="confirmarSenha"
+        placeholder="Digite novamente sua senha"
+        required
+        minlength="4"
+      >
+    </div>
+
+    <button type="submit" class="btn submit">
+      Criar minha conta
+    </button>
+
+  </form>
+
+  <div class="bottom">
+    Já possui uma conta?
+    <a href="login.html">Entrar agora</a>
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  © 2026 Hardware News Pro
+</footer>
+
+<script>
+
+const STORAGE_USERS = "hardwareNewsUsuarios";
+const STORAGE_LOGGED = "hardwareNewsUsuarioLogado";
+
+function obterUsuarios(){
+
+  try{
+
+    const dados = localStorage.getItem(STORAGE_USERS);
+
+    if(!dados){
+      return [];
+    }
+
+    const usuarios = JSON.parse(dados);
+
+    return Array.isArray(usuarios) ? usuarios : [];
+
+  }catch(error){
+
+    console.error("Erro ao carregar usuários:", error);
+
+    return [];
+  }
+}
+
+function salvarUsuarios(usuarios){
+
+  localStorage.setItem(
+    STORAGE_USERS,
+    JSON.stringify(usuarios)
+  );
+}
+
+function mostrarMensagem(texto, tipo){
+
+  const mensagem = document.getElementById("message");
+
+  mensagem.textContent = texto;
+
+  mensagem.className =
+    "message show " + tipo;
+}
+
+document
+  .getElementById("cadastroForm")
+  .addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    const nome =
+      document.getElementById("nome")
+      .value
+      .trim();
+
+    const email =
+      document.getElementById("email")
+      .value
+      .trim()
+      .toLowerCase();
+
+    const senha =
+      document.getElementById("senha")
+      .value;
+
+    const confirmarSenha =
+      document.getElementById("confirmarSenha")
+      .value;
+
+    if(nome.length < 2){
+
+      mostrarMensagem(
+        "Digite um nome válido.",
+        "error"
+      );
+
+      return;
+    }
+
+    if(senha.length < 4){
+
+      mostrarMensagem(
+        "A senha deve possuir pelo menos 4 caracteres.",
+        "error"
+      );
+
+      return;
+    }
+
+    if(senha !== confirmarSenha){
+
+      mostrarMensagem(
+        "As senhas não são iguais.",
+        "error"
+      );
+
+      return;
+    }
+
+    const usuarios = obterUsuarios();
+
+    const emailExiste =
+      usuarios.some(function(usuario){
+
+        return usuario.email === email;
+
+      });
+
+    if(emailExiste){
+
+      mostrarMensagem(
+        "Este e-mail já está cadastrado. Faça login.",
+        "error"
+      );
+
+      return;
+    }
+
+    const novoUsuario = {
+
+      id: "user-" + Date.now(),
+
+      nome: nome,
+
+      email: email,
+
+      senha: senha,
+
+      premium: false,
+
+      createdAt:
+        new Date().toLocaleDateString("pt-BR")
+
+    };
+
+    usuarios.push(novoUsuario);
+
+    salvarUsuarios(usuarios);
+
+    /* Criar sessão automaticamente */
+
+    const usuarioLogado = {
+
+      id: novoUsuario.id,
+
+      nome: novoUsuario.nome,
+
+      email: novoUsuario.email,
+
+      premium: novoUsuario.premium
+
+    };
+
+    localStorage.setItem(
+      STORAGE_LOGGED,
+      JSON.stringify(usuarioLogado)
+    );
+
+    mostrarMensagem(
+      "Conta criada com sucesso! Redirecionando...",
+      "success"
+    );
+
+    setTimeout(function(){
+
+      window.location.href = "index.html";
+
+    }, 1200);
+
+  });
+
+</script>
+
+</body>
+</html>
