@@ -1,61 +1,381 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b14">
 
-<meta name="theme-color" content="#070b14">
+  <title>Hardware News Pro | Notícias de Hardware</title>
 
-<title>Hardware News Pro | Notícias de Hardware</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 
-<style>
+<body>
 
-:root{
-    --bg:#070b14;
-    --bg2:#0b1220;
-    --card:#101827;
-    --card-hover:#162238;
-    --text:#f1f5f9;
-    --muted:#94a3b8;
-    --blue:#38bdf8;
-    --blue-dark:#0284c7;
-    --purple:#8b5cf6;
-    --green:#22c55e;
-    --red:#ef4444;
-    --line:#243044;
-}
+<header>
 
-*{
-    box-sizing:border-box;
-}
+  <div class="container nav">
 
-html{
-    scroll-behavior:smooth;
-}
+    <a href="index.html" class="logo">
+      HARDWARE <span>NEWS PRO</span>
+    </a>
 
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:
-    radial-gradient(
-        circle at top,
-        #111d36 0%,
-        var(--bg) 45%
-    );
-    color:var(--text);
-}
+    <nav class="navlinks">
+      <a href="index.html">Início</a>
+      <a href="#noticias">Notícias</a>
+      <a href="premium.html">Premium</a>
+      <a href="#planos">Planos</a>
+    </nav>
 
-/* HEADER */
+    <div id="userArea">
 
-header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(7,11,20,.95);
-    backdrop-filter:blur(15px);
-    border-bottom:1px solid var(--line);
-}
+      <a href="login.html" class="btn secondary">
+        Entrar
+      </a>
 
-.nav
+      <a href="#planos" class="btn">
+        Assinar
+      </a>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+  <div class="container heroGrid">
+
+    <div>
+
+      <div class="badge">
+        🟢 NOTÍCIAS • HARDWARE • TECNOLOGIA
+      </div>
+
+      <h1>
+        O futuro do
+        <span>hardware.</span>
+      </h1>
+
+      <p>
+        Notícias, análises, benchmarks, comparativos e
+        guias para quem acompanha o mundo da tecnologia.
+      </p>
+
+      <div class="heroButtons">
+
+        <a href="#noticias" class="btn">
+          📰 Ver notícias
+        </a>
+
+        <a href="premium.html" class="btn secondary">
+          🔒 Conhecer Premium
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="heroCard">
+
+      <div class="heroIcon">
+        🔐
+      </div>
+
+      <h2>
+        Conteúdo Premium
+      </h2>
+
+      <p>
+        Assine para acessar benchmarks completos,
+        comparativos avançados e guias exclusivos.
+      </p>
+
+      <a href="premium.html" class="btn">
+        Ver conteúdo Premium
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="sectionHead">
+
+<h2>Categorias</h2>
+
+<p>Explore o mundo do hardware</p>
+
+</div>
+
+<div class="categories">
+
+<button class="category">🎮 GPUs</button>
+<button class="category">⚙️ Processadores</button>
+<button class="category">🖥️ PC Gamer</button>
+<button class="category">🤖 IA</button>
+<button class="category">💾 SSD</button>
+<button class="category">📱 Smartphones</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="noticias">
+
+<div class="container">
+
+<div class="sectionHead">
+
+<h2>Últimas Notícias</h2>
+
+<p>Conteúdo gratuito</p>
+
+</div>
+
+
+<div class="featured">
+
+<div class="featuredMain">
+
+<div class="tag">
+DESTAQUE
+</div>
+
+<h2>
+O futuro das placas de vídeo e da inteligência artificial
+</h2>
+
+<p>
+Entenda como as novas arquiteturas estão mudando
+o mercado de GPUs e computação.
+</p>
+
+<a href="noticia.html?id=gpu-futuro" class="btn">
+Ler matéria
+</a>
+
+</div>
+
+
+<div class="featuredSide">
+
+<a href="noticia.html?id=processadores" class="miniNews">
+
+<small>PROCESSADORES</small>
+
+<h3>
+Como escolher o processador ideal
+</h3>
+
+<p>
+Guia para escolher seu próximo CPU.
+</p>
+
+</a>
+
+
+<a href="noticia.html?id=pc-gamer" class="miniNews">
+
+<small>PC GAMER</small>
+
+<h3>
+Como montar um PC equilibrado
+</h3>
+
+<p>
+Veja quais componentes combinam melhor.
+</p>
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="newsGrid" id="newsGrid">
+
+<!-- Notícias carregadas pelo JavaScript -->
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="planos">
+
+<div class="container">
+
+<div class="sectionHead">
+
+<h2>Planos Premium</h2>
+
+<p>Escolha seu acesso</p>
+
+</div>
+
+
+<div class="plans">
+
+<div class="plan">
+
+<h3>Mensal</h3>
+
+<div class="price">
+R$ 9,90
+<span>/mês</span>
+</div>
+
+<ul>
+<li>Notícias Premium</li>
+<li>Guias exclusivos</li>
+<li>Área do assinante</li>
+</ul>
+
+<button
+class="btn full"
+onclick="choosePlan('Mensal')">
+
+Começar
+
+</button>
+
+</div>
+
+
+<div class="plan popularPlan">
+
+<div class="planBadge">
+MAIS POPULAR
+</div>
+
+<h3>Premium</h3>
+
+<div class="price">
+R$ 19,90
+<span>/mês</span>
+</div>
+
+<ul>
+<li>Todos os conteúdos</li>
+<li>Benchmarks completos</li>
+<li>Comparativos avançados</li>
+<li>Novidades exclusivas</li>
+</ul>
+
+<button
+class="btn full"
+onclick="choosePlan('Premium')">
+
+Assinar Premium
+
+</button>
+
+</div>
+
+
+<div class="plan">
+
+<h3>Anual</h3>
+
+<div class="price">
+R$ 149,90
+<span>/ano</span>
+</div>
+
+<ul>
+<li>12 meses de acesso</li>
+<li>Conteúdo completo</li>
+<li>Maior economia</li>
+</ul>
+
+<button
+class="btn full"
+onclick="choosePlan('Anual')">
+
+Assinar Anual
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="cta">
+
+<h2>
+Entre para o Hardware News Pro
+</h2>
+
+<p>
+Crie sua conta e acompanhe as principais notícias
+do mundo do hardware.
+</p>
+
+<a href="login.html" class="btn">
+Criar minha conta
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="container">
+
+<strong>
+HARDWARE NEWS PRO
+</strong>
+
+<p>
+Notícias, análises e tecnologia.
+</p>
+
+<p>
+© 2026 Hardware News Pro
+</p>
+
+</div>
+
+</footer>
+
+
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/news.js"></script>
+
+</body>
+</html>
