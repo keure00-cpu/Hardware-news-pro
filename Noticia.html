@@ -11,7 +11,6 @@
   --bg:#07111f;
   --bg2:#0b1626;
   --card:#101d30;
-  --card2:#0b1727;
   --blue:#00b7ff;
   --blue2:#63d5ff;
   --text:#f5f8fc;
@@ -21,13 +20,9 @@
   --yellow:#ffc857;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -48,4 +43,875 @@ button{
   font-family:inherit;
 }
 
-/* ================= HEADER
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(7,17,31,.96);
+  border-bottom:1px solid var(--border);
+}
+
+.container{
+  width:min(1150px,92%);
+  margin:auto;
+}
+
+nav{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:900;
+}
+
+.logo span{color:var(--blue)}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.user-name{
+  color:var(--blue2);
+  font-size:13px;
+  font-weight:bold;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  cursor:pointer;
+  padding:12px 18px;
+  border-radius:10px;
+  font-weight:800;
+  background:linear-gradient(135deg,var(--blue2),var(--blue));
+  color:#04121d;
+}
+
+.btn-outline{
+  background:transparent;
+  color:white;
+  border:1px solid var(--border);
+}
+
+/* ARTICLE */
+
+.article-header{
+  width:min(850px,92%);
+  margin:auto;
+  padding:70px 0 30px;
+}
+
+.badge{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:20px;
+  background:rgba(0,183,255,.08);
+  border:1px solid rgba(0,183,255,.25);
+  color:var(--blue2);
+  font-size:11px;
+  font-weight:bold;
+}
+
+.badge.premium{
+  color:var(--yellow);
+  border-color:rgba(255,200,87,.3);
+  background:rgba(255,200,87,.08);
+}
+
+h1{
+  font-size:clamp(36px,6vw,62px);
+  line-height:1.08;
+  margin:20px 0;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
+}
+
+.info{
+  margin-top:25px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.cover{
+  width:min(1050px,92%);
+  height:380px;
+  margin:20px auto 45px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:130px;
+  border-radius:25px;
+  border:1px solid var(--border);
+  background:
+    radial-gradient(circle,rgba(0,183,255,.3),transparent 45%),
+    linear-gradient(135deg,#096c98,#1b2552,#3f216b);
+}
+
+.content{
+  width:min(850px,92%);
+  margin:auto;
+  padding-bottom:70px;
+}
+
+.content p{
+  color:#c0cad7;
+  font-size:17px;
+  line-height:1.9;
+  margin:25px 0;
+}
+
+.content h2{
+  margin-top:40px;
+}
+
+/* PREMIUM */
+
+.premium-box{
+  position:relative;
+  overflow:hidden;
+  margin:45px 0;
+  border-radius:22px;
+  border:1px solid var(--border);
+  background:var(--card);
+}
+
+.premium-content{
+  padding:35px;
+}
+
+.premium-box.locked .premium-content{
+  filter:blur(6px);
+  opacity:.25;
+  pointer-events:none;
+  user-select:none;
+}
+
+.lock-screen{
+  display:none;
+  position:absolute;
+  inset:0;
+  padding:25px;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:rgba(7,17,31,.88);
+}
+
+.premium-box.locked .lock-screen{
+  display:flex;
+}
+
+.lock-icon{
+  font-size:55px;
+}
+
+.lock-screen p{
+  max-width:500px;
+  color:var(--muted);
+}
+
+/* CTA */
+
+.cta{
+  padding:35px;
+  text-align:center;
+  border-radius:22px;
+  background:linear-gradient(135deg,#08263a,#17193d);
+  border:1px solid rgba(0,183,255,.25);
+}
+
+.cta-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:20px;
+}
+
+.whatsapp{
+  background:var(--green);
+  color:white;
+}
+
+.not-found{
+  width:min(700px,92%);
+  margin:100px auto;
+  padding:40px;
+  text-align:center;
+  border-radius:22px;
+  background:var(--card);
+  border:1px solid var(--border);
+}
+
+footer{
+  padding:40px;
+  text-align:center;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+}
+
+footer span{color:var(--blue)}
+
+@media(max-width:650px){
+
+  .user-name{
+    display:none;
+  }
+
+  .cover{
+    height:230px;
+    font-size:80px;
+  }
+
+  .article-header{
+    padding-top:45px;
+  }
+
+  .content p{
+    font-size:16px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="container">
+
+<nav>
+
+<a href="index.html" class="logo">
+HARDWARE <span>NEWS PRO</span>
+</a>
+
+<div
+class="nav-actions"
+id="navActions">
+</div>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main id="mainContent">
+</main>
+
+
+<footer>
+
+<strong>
+HARDWARE <span>NEWS PRO</span>
+</strong>
+
+<p>
+© 2026 Hardware News Pro
+</p>
+
+</footer>
+
+
+<script>
+
+/* ========================================
+   STORAGE
+======================================== */
+
+const STORAGE_USERS =
+  "hardwareNewsUsuarios";
+
+const STORAGE_LOGGED =
+  "hardwareNewsUsuarioLogado";
+
+const STORAGE_NEWS =
+  "hardwareNewsNoticias";
+
+
+/* ========================================
+   NOTÍCIAS PADRÃO
+======================================== */
+
+const noticiasPadrao = [
+
+{
+  id:"news-1",
+  title:"O futuro das placas de vídeo está cada vez mais ligado à inteligência artificial",
+  category:"Placas de vídeo",
+  icon:"🎮",
+  summary:"As GPUs deixaram de ser utilizadas apenas para jogos e passaram a ser fundamentais para inteligência artificial.",
+  content:`
+Durante muitos anos, uma placa de vídeo era vista principalmente como um componente voltado para jogos.
+
+Com o crescimento da inteligência artificial, as GPUs passaram a executar tarefas muito mais complexas.
+
+A capacidade de processar várias operações simultaneamente tornou esses componentes extremamente importantes para aplicações modernas.
+
+Empresas e desenvolvedores utilizam GPUs para inteligência artificial, criação de conteúdo, ciência e computação avançada.
+  `,
+  premium:false,
+  createdAt:"2026"
+},
+
+{
+  id:"news-2",
+  title:"Como escolher um processador para seu computador",
+  category:"Processadores",
+  icon:"⚙️",
+  summary:"Conheça os principais pontos para escolher uma CPU equilibrada.",
+  content:`
+Escolher um processador depende diretamente do objetivo do computador.
+
+Para tarefas básicas, não é necessário investir em um processador extremamente poderoso.
+
+Já para jogos, edição de vídeo e aplicações profissionais, uma CPU mais potente pode fazer uma grande diferença.
+
+Também é importante verificar a compatibilidade com a placa-mãe, memória RAM e sistema de refrigeração.
+  `,
+  premium:false,
+  createdAt:"2026"
+},
+
+{
+  id:"news-3",
+  title:"Benchmark avançado das GPUs modernas",
+  category:"Hardware",
+  icon:"📊",
+  summary:"Comparativos completos de desempenho e eficiência para usuários avançados.",
+  content:`
+As placas de vídeo modernas apresentam diferenças importantes dependendo da resolução e do tipo de aplicação.
+
+O desempenho pode variar significativamente entre jogos, criação de conteúdo e inteligência artificial.
+
+Esta análise apresenta uma visão geral sobre os principais fatores que influenciam o desempenho de uma GPU.
+  `,
+  premium:true,
+  createdAt:"2026"
+}
+
+];
+
+
+/* ========================================
+   INICIALIZAR NOTÍCIAS
+======================================== */
+
+function obterNoticias(){
+
+  try{
+
+    const dados =
+      localStorage.getItem(STORAGE_NEWS);
+
+    if(!dados){
+
+      localStorage.setItem(
+        STORAGE_NEWS,
+        JSON.stringify(noticiasPadrao)
+      );
+
+      return noticiasPadrao;
+    }
+
+    const noticias =
+      JSON.parse(dados);
+
+    return Array.isArray(noticias)
+      ? noticias
+      : noticiasPadrao;
+
+  }catch(error){
+
+    return noticiasPadrao;
+
+  }
+
+}
+
+
+/* ========================================
+   USUÁRIO LOGADO
+======================================== */
+
+function obterUsuario(){
+
+  try{
+
+    const dados =
+      localStorage.getItem(STORAGE_LOGGED);
+
+    if(!dados){
+      return null;
+    }
+
+    const usuario =
+      JSON.parse(dados);
+
+    if(!usuario || !usuario.email){
+      return null;
+    }
+
+    return usuario;
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+/* ========================================
+   ATUALIZAR PREMIUM
+======================================== */
+
+function atualizarPremium(usuario){
+
+  if(!usuario){
+    return null;
+  }
+
+  try{
+
+    const usuarios =
+      JSON.parse(
+        localStorage.getItem(STORAGE_USERS)
+      ) || [];
+
+
+    const usuarioAtual =
+      usuarios.find(function(item){
+
+        return String(item.email || "")
+          .toLowerCase() ===
+          String(usuario.email || "")
+          .toLowerCase();
+
+      });
+
+
+    if(usuarioAtual){
+
+      usuario.premium =
+        usuarioAtual.premium === true;
+
+      usuario.plano =
+        usuarioAtual.plano ||
+        (usuario.premium
+          ? "Premium"
+          : "Gratuito");
+
+
+      localStorage.setItem(
+        STORAGE_LOGGED,
+        JSON.stringify(usuario)
+      );
+
+    }
+
+  }catch(error){}
+
+  return usuario;
+
+}
+
+
+/* ========================================
+   MENU
+======================================== */
+
+function carregarMenu(usuario){
+
+  const nav =
+    document.getElementById("navActions");
+
+
+  if(!usuario){
+
+    nav.innerHTML = `
+      <a href="login.html" class="btn btn-outline">
+        Entrar
+      </a>
+
+      <a href="cadastro.html" class="btn">
+        Criar conta
+      </a>
+    `;
+
+    return;
+  }
+
+
+  nav.innerHTML = `
+
+    <span class="user-name">
+      👤 ${escapeHTML(usuario.nome || "Usuário")}
+      ${usuario.premium === true ? "👑" : ""}
+    </span>
+
+    <a href="index.html" class="btn btn-outline">
+      Início
+    </a>
+
+    <button
+      class="btn btn-outline"
+      onclick="sair()">
+      Sair
+    </button>
+
+  `;
+
+}
+
+
+function sair(){
+
+  localStorage.removeItem(
+    STORAGE_LOGGED
+  );
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* ========================================
+   URL
+======================================== */
+
+function obterId(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return params.get("id");
+
+}
+
+
+/* ========================================
+   SEGURANÇA HTML
+======================================== */
+
+function escapeHTML(valor){
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    String(valor || "");
+
+  return div.innerHTML;
+
+}
+
+
+/* ========================================
+   FORMATAR TEXTO
+======================================== */
+
+function formatarConteudo(texto){
+
+  return String(texto || "")
+    .trim()
+    .split(/\n\s*\n/)
+    .map(function(paragrafo){
+
+      return `
+        <p>
+          ${escapeHTML(paragrafo.trim())}
+        </p>
+      `;
+
+    })
+    .join("");
+
+}
+
+
+/* ========================================
+   MOSTRAR NOTÍCIA
+======================================== */
+
+function mostrarNoticia(noticia,usuario){
+
+  const premium =
+    noticia.premium === true;
+
+  const liberado =
+    !premium ||
+    (usuario &&
+     usuario.premium === true);
+
+
+  const premiumBox =
+    premium
+    ? `
+
+      <div class="premium-box ${liberado ? "" : "locked"}">
+
+        <div class="premium-content">
+
+          <span class="badge premium">
+            👑 ANÁLISE PREMIUM
+          </span>
+
+          <h2>
+            Conteúdo exclusivo Hardware News Pro
+          </h2>
+
+          <p>
+            Esta parte da análise apresenta informações exclusivas para usuários Premium.
+          </p>
+
+          <p>
+            Usuários Premium possuem acesso aos conteúdos especiais e análises avançadas.
+          </p>
+
+          <h2>
+            Conclusão
+          </h2>
+
+          <p>
+            A escolha do hardware deve considerar desempenho, eficiência e o objetivo de utilização do computador.
+          </p>
+
+        </div>
+
+        <div class="lock-screen">
+
+          <div class="lock-icon">
+            🔒
+          </div>
+
+          <h2>
+            Conteúdo Premium
+          </h2>
+
+          <p>
+            Entre no Premium para desbloquear esta análise exclusiva.
+          </p>
+
+          <a
+            href="premium.html"
+            class="btn">
+            👑 Ver Premium
+          </a>
+
+        </div>
+
+      </div>
+
+    `
+    : "";
+
+
+  document.getElementById("mainContent")
+  .innerHTML = `
+
+    <section class="article-header">
+
+      <span class="badge ${premium ? "premium" : ""}">
+
+        ${
+          premium
+          ? "👑 PREMIUM"
+          : escapeHTML(noticia.category || "NOTÍCIA")
+        }
+
+      </span>
+
+      <h1>
+        ${escapeHTML(noticia.title)}
+      </h1>
+
+      <p class="subtitle">
+        ${escapeHTML(noticia.summary)}
+      </p>
+
+      <div class="info">
+        Hardware News Pro •
+        ${escapeHTML(noticia.createdAt || "2026")}
+      </div>
+
+    </section>
+
+
+    <div class="cover">
+      ${escapeHTML(noticia.icon || "📰")}
+    </div>
+
+
+    <article class="content">
+
+      ${formatarConteudo(noticia.content)}
+
+      ${premiumBox}
+
+
+      <div class="cta">
+
+        <span class="badge">
+          HARDWARE NEWS PRO
+        </span>
+
+        <h2>
+          Gostou da notícia?
+        </h2>
+
+        <p>
+          Acompanhe mais conteúdos sobre hardware e tecnologia.
+        </p>
+
+        <div class="cta-buttons">
+
+          <a
+            href="index.html"
+            class="btn">
+            📰 Ver notícias
+          </a>
+
+          <a
+            href="https://wa.me/5561993730064"
+            target="_blank"
+            rel="noopener"
+            class="btn whatsapp">
+            💬 Contato
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+
+  document.title =
+    noticia.title +
+    " | Hardware News Pro";
+
+}
+
+
+/* ========================================
+   NOTÍCIA NÃO ENCONTRADA
+======================================== */
+
+function noticiaNaoEncontrada(){
+
+  document.getElementById("mainContent")
+  .innerHTML = `
+
+    <div class="not-found">
+
+      <div style="font-size:60px">
+        📰
+      </div>
+
+      <h1>
+        Notícia não encontrada
+      </h1>
+
+      <p>
+        Esta notícia não existe ou foi removida.
+      </p>
+
+      <a
+        href="index.html"
+        class="btn">
+        ← Voltar ao início
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ========================================
+   INICIAR
+======================================== */
+
+function iniciar(){
+
+  const noticias =
+    obterNoticias();
+
+  let usuario =
+    obterUsuario();
+
+  usuario =
+    atualizarPremium(usuario);
+
+  carregarMenu(usuario);
+
+
+  const id =
+    obterId();
+
+
+  let noticia =
+    noticias.find(function(item){
+
+      return item.id === id;
+
+    });
+
+
+  if(!noticia && id === null){
+
+    noticia = noticias[0];
+
+  }
+
+
+  if(!noticia){
+
+    noticiaNaoEncontrada();
+
+    return;
+
+  }
+
+
+  mostrarNoticia(
+    noticia,
+    usuario
+  );
+
+}
+
+
+iniciar();
+
+</script>
+
+</body>
+</html>
