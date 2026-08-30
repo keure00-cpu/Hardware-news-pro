@@ -200,4 +200,636 @@ input:focus{
   display:block;
   color:#ffabb4;
   background:rgba(255,102,117,.10);
-  border:1px solid rgba(255,102,
+  border:1px solid rgba(255,102,117,.35);
+}
+
+.message.success{
+  display:block;
+  color:#7ee0ff;
+  background:rgba(0,183,255,.10);
+  border:1px solid rgba(0,183,255,.35);
+}
+
+/* BOTTOM */
+
+.bottom{
+  margin-top:25px;
+  text-align:center;
+}
+
+.bottom p{
+  color:var(--muted);
+}
+
+.bottom a{
+  color:var(--blue2);
+  font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+  padding:25px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+  .card{
+    padding:25px;
+  }
+
+  h1{
+    font-size:29px;
+  }
+
+  nav{
+    min-height:65px;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<nav>
+
+<a
+href="index.html"
+class="logo">
+
+HARDWARE
+<span>NEWS PRO</span>
+
+</a>
+
+<a
+href="index.html"
+class="btn btn-outline">
+
+← Início
+
+</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+<section class="card">
+
+<span class="badge">
+CRIAR CONTA
+</span>
+
+<h1>
+Crie sua conta
+</h1>
+
+<p class="description">
+Cadastre-se gratuitamente para acessar o Hardware News Pro.
+</p>
+
+
+<form id="cadastroForm">
+
+<label for="nome">
+Nome
+</label>
+
+<input
+id="nome"
+type="text"
+placeholder="Digite seu nome"
+autocomplete="name"
+required
+>
+
+
+<label for="email">
+E-mail
+</label>
+
+<input
+id="email"
+type="email"
+placeholder="Digite seu melhor e-mail"
+autocomplete="email"
+required
+>
+
+
+<label for="senha">
+Senha
+</label>
+
+<input
+id="senha"
+type="password"
+placeholder="Crie uma senha"
+autocomplete="new-password"
+minlength="4"
+required
+>
+
+
+<label for="confirmarSenha">
+Confirmar senha
+</label>
+
+<input
+id="confirmarSenha"
+type="password"
+placeholder="Digite a senha novamente"
+autocomplete="new-password"
+minlength="4"
+required
+>
+
+
+<div
+id="message"
+class="message"
+aria-live="polite">
+</div>
+
+
+<button
+id="cadastroButton"
+type="submit"
+class="btn submit">
+
+👤 Criar minha conta
+
+</button>
+
+</form>
+
+
+<div class="bottom">
+
+<p>
+Já possui uma conta?
+</p>
+
+<a href="login.html">
+Entrar agora →
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+© 2026 Hardware News Pro
+
+</footer>
+
+
+<script>
+"use strict";
+
+/* =====================================
+   CHAVES DO SISTEMA
+===================================== */
+
+const STORAGE_USERS =
+  "hardwareNewsUsuarios";
+
+const STORAGE_LOGGED =
+  "hardwareNewsUsuarioLogado";
+
+
+/* =====================================
+   ELEMENTOS
+===================================== */
+
+const cadastroForm =
+  document.getElementById("cadastroForm");
+
+const nomeInput =
+  document.getElementById("nome");
+
+const emailInput =
+  document.getElementById("email");
+
+const senhaInput =
+  document.getElementById("senha");
+
+const confirmarSenhaInput =
+  document.getElementById("confirmarSenha");
+
+const messageBox =
+  document.getElementById("message");
+
+const cadastroButton =
+  document.getElementById("cadastroButton");
+
+
+/* =====================================
+   MENSAGENS
+===================================== */
+
+function mostrarMensagem(texto,tipo){
+
+  messageBox.textContent = texto;
+
+  messageBox.className =
+    "message " + tipo;
+
+}
+
+
+/* =====================================
+   OBTER USUÁRIOS
+===================================== */
+
+function obterUsuarios(){
+
+  try{
+
+    const dados =
+      localStorage.getItem(
+        STORAGE_USERS
+      );
+
+    if(!dados){
+      return [];
+    }
+
+    const usuarios =
+      JSON.parse(dados);
+
+    if(Array.isArray(usuarios)){
+      return usuarios;
+    }
+
+    return [];
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro ao carregar usuários:",
+      erro
+    );
+
+    return [];
+
+  }
+
+}
+
+
+/* =====================================
+   SALVAR USUÁRIOS
+===================================== */
+
+function salvarUsuarios(usuarios){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_USERS,
+      JSON.stringify(usuarios)
+    );
+
+    return true;
+
+  }
+  catch(erro){
+
+    console.error(
+      "Erro ao salvar usuários:",
+      erro
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================
+   CADASTRO
+===================================== */
+
+cadastroForm.addEventListener(
+  "submit",
+  function(event){
+
+    event.preventDefault();
+
+
+    const nome =
+      nomeInput.value.trim();
+
+
+    const email =
+      emailInput.value
+      .trim()
+      .toLowerCase();
+
+
+    const senha =
+      senhaInput.value;
+
+
+    const confirmarSenha =
+      confirmarSenhaInput.value;
+
+
+    /* VALIDAR NOME */
+
+    if(nome.length < 2){
+
+      mostrarMensagem(
+        "Digite um nome válido.",
+        "error"
+      );
+
+      nomeInput.focus();
+
+      return;
+
+    }
+
+
+    /* VALIDAR EMAIL */
+
+    if(!email){
+
+      mostrarMensagem(
+        "Digite um e-mail válido.",
+        "error"
+      );
+
+      emailInput.focus();
+
+      return;
+
+    }
+
+
+    /* VALIDAR SENHA */
+
+    if(senha.length < 4){
+
+      mostrarMensagem(
+        "A senha deve possuir pelo menos 4 caracteres.",
+        "error"
+      );
+
+      senhaInput.focus();
+
+      return;
+
+    }
+
+
+    /* CONFIRMAR SENHA */
+
+    if(senha !== confirmarSenha){
+
+      mostrarMensagem(
+        "As senhas não são iguais.",
+        "error"
+      );
+
+      confirmarSenhaInput.value = "";
+      confirmarSenhaInput.focus();
+
+      return;
+
+    }
+
+
+    /* OBTER USUÁRIOS */
+
+    const usuarios =
+      obterUsuarios();
+
+
+    /* VERIFICAR EMAIL */
+
+    const usuarioExiste =
+      usuarios.some(
+        function(usuario){
+
+          return (
+            String(
+              usuario.email || ""
+            )
+            .trim()
+            .toLowerCase() === email
+          );
+
+        }
+      );
+
+
+    if(usuarioExiste){
+
+      mostrarMensagem(
+        "Este e-mail já possui uma conta cadastrada.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /* NOVO USUÁRIO */
+
+    const novoUsuario = {
+
+      id:
+        "user_" +
+        Date.now() +
+        "_" +
+        Math.random()
+        .toString(36)
+        .substring(2,8),
+
+      nome:
+        nome,
+
+      email:
+        email,
+
+      senha:
+        senha,
+
+      premium:
+        false,
+
+      plano:
+        "Gratuito",
+
+      criadoEm:
+        new Date().toISOString()
+
+    };
+
+
+    /* ADICIONAR */
+
+    usuarios.push(
+      novoUsuario
+    );
+
+
+    /* SALVAR */
+
+    const salvo =
+      salvarUsuarios(
+        usuarios
+      );
+
+
+    if(!salvo){
+
+      mostrarMensagem(
+        "Não foi possível salvar sua conta neste navegador.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /* CRIAR SESSÃO AUTOMÁTICA */
+
+    const usuarioLogado = {
+
+      id:
+        novoUsuario.id,
+
+      nome:
+        novoUsuario.nome,
+
+      email:
+        novoUsuario.email,
+
+      premium:
+        novoUsuario.premium,
+
+      plano:
+        novoUsuario.plano,
+
+      loginEm:
+        new Date().toISOString()
+
+    };
+
+
+    try{
+
+      localStorage.setItem(
+        STORAGE_LOGGED,
+        JSON.stringify(usuarioLogado)
+      );
+
+    }
+    catch(erro){
+
+      console.error(
+        "Erro ao criar sessão:",
+        erro
+      );
+
+    }
+
+
+    /* SUCESSO */
+
+    mostrarMensagem(
+      "Conta criada com sucesso! Redirecionando...",
+      "success"
+    );
+
+
+    cadastroButton.disabled = true;
+
+
+    /* REDIRECIONAR */
+
+    setTimeout(
+      function(){
+
+        window.location.href =
+          "index.html";
+
+      },
+      900
+    );
+
+  }
+);
+
+
+/* =====================================
+   VERIFICAR SE JÁ ESTÁ LOGADO
+===================================== */
+
+try{
+
+  const sessao =
+    localStorage.getItem(
+      STORAGE_LOGGED
+    );
+
+
+  if(sessao){
+
+    const usuario =
+      JSON.parse(sessao);
+
+
+    if(
+      usuario &&
+      usuario.email
+    ){
+
+      mostrarMensagem(
+        "Você já possui uma sessão ativa.",
+        "success"
+      );
+
+    }
+
+  }
+
+}
+catch(erro){
+
+  localStorage.removeItem(
+    STORAGE_LOGGED
+  );
+
+}
+
+</script>
+
+</body>
+</html>
